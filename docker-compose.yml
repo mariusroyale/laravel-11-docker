@@ -44,5 +44,18 @@ services:
       - ./backend:/var/www
     command: tail -f /dev/null
 
+  valkey:
+    build:
+      context: .
+      dockerfile: docker/valkey/Dockerfile
+    container_name: valkey
+    ports:
+      - "6379:6379"
+    volumes:
+      - valkey-data:/data
+      - ./docker/valkey/valkey.conf:/etc/valkey/valkey.conf
+    restart: unless-stopped
+
 volumes:
   pgdata:
+  valkey-data:

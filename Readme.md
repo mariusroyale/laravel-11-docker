@@ -6,6 +6,7 @@ This repository contains a Laravel 11 application set up with Docker using:
 - Nginx (latest)
 - PostgreSQL (latest)
 - Node.js + npm (latest) with Vite
+- Valkey (latest) for in memory cache
 - Docker Compose for orchestration
 
 ---
@@ -17,6 +18,10 @@ This repository contains a Laravel 11 application set up with Docker using:
 ```bash
 ./setup.sh
 ```
+or 
+```bash
+./rebuild-docker.sh
+```
 
 (or manually:)
 
@@ -27,7 +32,7 @@ docker-compose up -d
 
 ### 2. Install Laravel and dependencies
 
-If not using \`setup.sh\`, run:
+If not using `setup.sh`, run:
 
 ```bash
 docker-compose exec app composer create-project laravel/laravel . "^11.0"
@@ -44,7 +49,7 @@ Open your browser at [http://localhost:8080](http://localhost:8080)
 
 ## Environment Variables
 
-Make sure your \`.env\` file has the following database settings for PostgreSQL:
+Make sure your `.env` file has the following database settings for PostgreSQL:
 
 ```env
 DB_CONNECTION=pgsql
@@ -53,6 +58,11 @@ DB_PORT=5432
 DB_DATABASE=laravel
 DB_USERNAME=laravel
 DB_PASSWORD=secret
+
+REDIS_CLIENT=phpredis
+REDIS_HOST=valkey
+REDIS_PASSWORD=null
+REDIS_PORT=6379
 ```
 
 ---
@@ -71,7 +81,7 @@ docker-compose exec node npm run dev
 ## Troubleshooting
 
 - If Laravel cannot connect to Postgres, ensure containers are up and Postgres is ready.
-- Restart containers if you update \`postgresql.conf\` or \`.env\`.
+- Restart containers if you update `postgresql.conf` or `.env`.
 
 ---
 
